@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title or "QR Validator" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --bg-light: #161b22;
+      --accent-gold: #f1c40f;
+      --accent-red: #e74c3c;
+      --text: #e6edf3;
+      --muted: #8b949e;
+    }
+    body {
+      margin: 0; font-family: Arial, sans-serif;
+      background: var(--bg-dark); color: var(--text);
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
+    header, footer {
+      padding: 1rem; text-align: center;
+      background: var(--bg-light);
+    }
+    a, button {
+      background: var(--accent-gold);
+      color: #000; text-decoration: none;
+      padding: 0.5rem 1rem; border-radius: 8px;
+      font-weight: bold; transition: 0.2s;
+    }
+    a:hover, button:hover {
+      background: var(--accent-red); color: #fff;
+    }
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+    }
+    .card {
+      background: var(--bg-light); padding: 2rem;
+      border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      max-width: 500px; width: 100%;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 1rem;
+    }
+    th, td {
+      border-bottom: 1px solid var(--muted); padding: 0.5rem;
+      text-align: left; font-size: 0.9rem;
+    }
+    .success { color: #2ecc71; font-size: 2rem; font-weight: bold; }
+    .error { color: var(--accent-red); font-size: 2rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>🎉 Secure QR Validator</h2>
+  </header>
+  <main>
+    <div class="card">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <footer>
+    <small>Event Access System · Party Mode ✨</small>
+  </footer>
+</body>
+</html>

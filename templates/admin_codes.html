@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+  <h3>📋 Admin Dashboard</h3>
+  <form method="post" action="{{ url_for('admin_codes_new') }}">
+    <input type="text" name="note" placeholder="Optional label"
+           style="padding:0.4rem; border-radius:6px; border:1px solid #333;">
+    <button type="submit">+ Generate QR</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Note</th>
+        <th>Created</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for code in codes %}
+        <tr>
+          <td>
+            <a href="{{ base_url }}/verify/{{ code.code_id }}" target="_blank">🔗 Link</a>
+          </td>
+          <td>{{ code.note or "-" }}</td>
+          <td>{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>
+            {% if code.used_at %}
+              <span style="color: var(--accent-red);">Used by {{ code.used_by }}</span>
+            {% else %}
+              <span style="color: var(--accent-gold);">Unused</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
