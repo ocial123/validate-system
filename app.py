@@ -19,8 +19,11 @@ if not DATABASE_URL:
     print("WARNING: DATABASE_URL not found. Falling back to SQLite.")
     DATABASE_URL = "sqlite:///qrdata.db"
 
+# Fix for Supabase/Render compatibility with pg8000# 
 # Fix for Supabase/Render compatibility with pg8000
-if DATABASE_URL.startswith("postgres://"):
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+pg8000://", 1)
+elif DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+pg8000://", 1)
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
