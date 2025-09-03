@@ -31,7 +31,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-# --- Database Model (Updated) ---
+# --- Database Model (Updated) --- 
 # This model now matches what your admin_codes.html template expects
 class QRCode(Base):
     __tablename__ = "qrcodes"
