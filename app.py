@@ -11,8 +11,15 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret")
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 # ✅ Database setup (Supabase or fallback SQLite)
+# ✅ Database setup (Supabase or fallback SQLite)
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///qrdata.db")
+
+# Fix for Render: use pg8000 instead of psycopg2
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+pg8000://", 1)
+
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, future=True)
+
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 Base = declarative_base()
 
