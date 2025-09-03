@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <h3>✅ QR Code Generated!</h3>
+  <p>Here is the new QR code for: <strong>{{ note or "General Admission" }}</strong></p>
+  <p>Right-click or long-press the image to save and share it.</p>
+  
+  <img src="data:image/png;base64,{{ qr_image }}" alt="Generated QR Code" style="max-width:300px; width:100%; border-radius:10px; margin-top:1rem;">
+
+  <div style="margin-top:2rem;">
+    <a href="{{ url_for('admin_codes') }}" class="button-style">Back to Dashboard</a>
+  </div>
+{% endblock %}
