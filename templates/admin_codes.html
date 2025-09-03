@@ -2,26 +2,22 @@
 {% block content %}
   <h3>📋 Admin Dashboard</h3>
   <form method="post" action="{{ url_for('admin_codes_new') }}">
-    <input type="text" name="note" placeholder="Optional label"
-           style="padding:0.4rem; border-radius:6px; border:1px solid #333;">
-    <button type="submit">+ Generate QR</button>
+    <input type="text" name="note" placeholder="Optional label">
+    <button type="submit" class="button">+ Generate QR</button>
   </form>
 
   <table>
     <thead>
       <tr>
-        <th>Code</th>
         <th>Note</th>
         <th>Created</th>
         <th>Status</th>
+        <th>Actions</th> {# <-- New Column #}
       </tr>
     </thead>
     <tbody>
       {% for code in codes %}
         <tr>
-          <td>
-            <a href="{{ base_url }}/verify/{{ code.code_id }}" target="_blank">🔗 Link</a>
-          </td>
           <td>{{ code.note or "-" }}</td>
           <td>{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
           <td>
@@ -30,6 +26,12 @@
             {% else %}
               <span style="color: var(--accent-gold);">Unused</span>
             {% endif %}
+          </td>
+          <td>
+            {# --- NEW: Delete Button Form --- #}
+            <form method="POST" action="{{ url_for('delete_code', code_id=code.code_id) }}" onsubmit="return confirm('Are you sure you want to delete this code?');">
+              <button type="submit" style="background:var(--accent-red); color:#fff;">Delete</button>
+            </form>
           </td>
         </tr>
       {% endfor %}

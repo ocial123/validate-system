@@ -141,6 +141,19 @@ def admin_codes_new():
     # 5. Show the new page with the generated QR code
     return render_template("show_qr.html", qr_image=qr_image_b64, note=note_text)
 
+# --- NEW: Route to delete a QR code ---
+@app.route("/admin/delete/<code_id>", methods=["POST"])
+@login_required
+def delete_code(code_id):
+    db = get_db()
+    code_to_delete = db.query(QRCode).filter_by(code_id=code_id).first()
+    if code_to_delete:
+        db.delete(code_to_delete)
+        db.commit()
+        flash("QR Code successfully deleted.")
+    else:
+        flash("Error: Code not found.")
+    return redirect(url_for("admin_codes"))
 
 # --- UPDATED: This verification route is now "smart" ---
 @app.route("/verify/<code>")
