@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <h3>📋 Admin Dashboard</h3>
-  <form method="post" action="{{ url_for('admin_codes_new') }}">
+  <form method="post" action="{{ url-for('admin_codes_new') }}">
     <input type="text" name="note" placeholder="Optional label">
     <button type="submit" class="button">+ Generate QR</button>
   </form>
@@ -12,23 +12,22 @@
         <th>Note</th>
         <th>Created</th>
         <th>Status</th>
-        <th>Actions</th> {# <-- New Column #}
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for code in codes %}
         <tr>
-          <td>{{ code.note or "-" }}</td>
-          <td>{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-          <td>
+          <td data-label="Note">{{ code.note or "-" }}</td>
+          <td data-label="Created">{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td data-label="Status">
             {% if code.used_at %}
               <span style="color: var(--accent-red);">Used by {{ code.used_by }}</span>
             {% else %}
               <span style="color: var(--accent-gold);">Unused</span>
             {% endif %}
           </td>
-          <td>
-            {# --- NEW: Delete Button Form --- #}
+          <td data-label="Actions">
             <form method="POST" action="{{ url_for('delete_code', code_id=code.code_id) }}" onsubmit="return confirm('Are you sure you want to delete this code?');">
               <button type="submit" style="background:var(--accent-red); color:#fff;">Delete</button>
             </form>
