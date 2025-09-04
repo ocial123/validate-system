@@ -1,5 +1,94 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>🎉 Welcome to Big Bang! 🎉</h1>
-  <p>Your ticket is valid. Please show this screen to the event staff.</p>
+  <style>
+    /* Simple styles for our countdown timer */
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .time-unit {
+      background: rgba(0,0,0,0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      min-width: 80px;
+    }
+    .time-unit span {
+      display: block;
+    }
+    .time-unit .number {
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .time-unit .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+  </style>
+
+  <h1>Big Bang! </h1>
+  <p>The event is starting soon. Save this QR for entry!</p>
+<p> Scan is Necessary while Entry!</p>
+  <div id="countdown">
+    <div class="time-unit">
+      <span id="days" class="number">0</span>
+      <span class="label">Days</span>
+    </div>
+    <div class="time-unit">
+      <span id="hours" class="number">0</span>
+      <span class="label">Hours</span>
+    </div>
+    <div class="time-unit">
+      <span id="minutes" class="number">0</span>
+      <span class="label">Minutes</span>
+    </div>
+    <div class="time-unit">
+      <span id="seconds" class="number">0</span>
+      <span class="label">Seconds</span>
+    </div>
+  </div>
+
+  <div id="event-live-message" style="display:none;">
+    <h2>The event is happening now!</h2>
+  </div>
+
+<script>
+  // This is the JavaScript that makes the countdown work.
+  (function() {
+    // --- IMPORTANT: Set your event date and time here! ---
+    // Format: "Month Day, Year HH:MM:SS" e.g., "Dec 31, 2025 20:00:00"
+    const countDownDate = new Date("Sept 12, 2025 18:00:00").getTime();
+
+    // Update the count down every 1 second
+    const x = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the elements with the corresponding IDs
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+
+      // If the count down is finished, show a different message
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("event-live-message").style.display = "block";
+      }
+    }, 1000);
+  })();
+</script>
 {% endblock %}
