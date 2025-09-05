@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <h3>📋 Admin Dashboard</h3>
-  <form method="post" action="{{ url-for('admin_codes_new') }}">
+  <form method="post" action="{{ url_for('admin_codes_new') }}">
     <input type="text" name="note" placeholder="Optional label">
     <button type="submit" class="button">+ Generate QR</button>
   </form>
